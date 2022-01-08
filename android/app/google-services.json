@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "137786788622",
+    "project_id": "project-uas-chat",
+    "storage_bucket": "project-uas-chat.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:137786788622:android:ac3cabd69e68bc55a9255f",
+        "android_client_info": {
+          "package_name": "com.machat.uas"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "137786788622-fum7f0vcgjaa3aaht78mktkbbon4uu32.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC2MGNgVuWXdzwPApGh38OY_exZh2uRNjg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "137786788622-fum7f0vcgjaa3aaht78mktkbbon4uu32.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

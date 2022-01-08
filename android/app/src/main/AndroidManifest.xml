@@ -1,5 +1,5 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.project_uas_chat">
+    package="com.machat.uas">
    <application
         android:label="project_uas_chat"
         android:icon="@mipmap/ic_launcher">

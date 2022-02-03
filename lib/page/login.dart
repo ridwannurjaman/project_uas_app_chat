@@ -13,6 +13,7 @@ class _LoginPageState extends State<LoginPage> {
   bool isLoading = false;
   bool isChecked = false;
   bool passwordVisible = true;
+  final _formKey = GlobalKey<FormState>();
 
   Color getColor(Set<MaterialState> states) {
     const Set<MaterialState> interactiveStates = <MaterialState>{
@@ -46,11 +47,16 @@ class _LoginPageState extends State<LoginPage> {
               Container(
                 margin: EdgeInsets.all(20),
                 child: Form(
+                  key: _formKey,
                   child: Column(
                     children: [
                       Padding(
                         padding: const EdgeInsets.all(8.0),
-                        child: TextField(
+                        child: TextFormField(
+                          validator: (value) => EmailValidator.validate(value!)
+                              ? null
+                              : "Please enter a valid email",
+                          onSaved: (value) => emails.text = value!,
                           controller: emails,
                           decoration: InputDecoration(
                             border: OutlineInputBorder(
@@ -64,7 +70,11 @@ class _LoginPageState extends State<LoginPage> {
                       ),
                       Padding(
                         padding: const EdgeInsets.all(8.0),
-                        child: TextField(
+                        child: TextFormField(
+                          validator: (value) => value != null
+                              ? null
+                              : "Please enter a valid email",
+                          onSaved: (value) => password.text = value!,
                           controller: password,
                           obscureText: passwordVisible ? true : false,
                           decoration: InputDecoration(
@@ -106,12 +116,7 @@ class _LoginPageState extends State<LoginPage> {
                               ),
                             ),
                           ),
-                          onPressed: () {
-                            Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) => RegisterPage()));
-                          },
+                          onPressed: () {},
                           label: Text('LOGIN'),
                           icon: isLoading
                               ? SizedBox(
@@ -121,6 +126,34 @@ class _LoginPageState extends State<LoginPage> {
                                   width: 20.0,
                                 )
                               : Container(),
+                        ),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.only(top: 8.0),
+                        child: SizedBox(
+                          width: MediaQuery.of(context).size.width,
+                          height: 45,
+                          child: ElevatedButton(
+                            style: ButtonStyle(
+                              backgroundColor: MaterialStateProperty.all<Color>(
+                                  Color(0xff036bca)),
+                              shape: MaterialStateProperty.all<
+                                  RoundedRectangleBorder>(
+                                RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(10.0),
+                                  side: BorderSide(
+                                      color: Color(0xff036bca), width: 2.0),
+                                ),
+                              ),
+                            ),
+                            onPressed: () {
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) => RegisterPage()));
+                            },
+                            child: Text('REGISTER'),
+                          ),
                         ),
                       ),
                     ],
@@ -137,5 +170,20 @@ class _LoginPageState extends State<LoginPage> {
         ),
       ),
     );
+  }
+
+  void sigin(String email, String password) async {
+    if (_formKey.currentState!.validate()) {
+      await _auth
+          .signInWithEmailAndPassword(email: email, password: password)
+          .then((res) {
+        Navigator.pushReplacement(
+            context,
+            MaterialPageRoute(
+                builder: (context) => HalamanUtama(
+                      uid: res.user!.uid,
+                    )));
+      });
+    }
   }
 }

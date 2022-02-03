@@ -15,7 +15,6 @@ class _RegisterPageState extends State<RegisterPage> {
   bool isLoading = false;
   bool passwordVisible = true;
   bool passwordVisibleType = true;
-
   Color getColor(Set<MaterialState> states) {
     const Set<MaterialState> interactiveStates = <MaterialState>{
       MaterialState.pressed,
@@ -182,5 +181,51 @@ class _RegisterPageState extends State<RegisterPage> {
         ),
       ),
     );
+  }
+
+  void signUp() {
+    _auth
+        .createUserWithEmailAndPassword(
+            email: email.text, password: password.text)
+        .then((result) {
+      saveToFireStore();
+    }).catchError((err) {
+      showDialog(
+          context: context,
+          builder: (BuildContext context) {
+            return AlertDialog(
+              title: Text("Error"),
+              content: Text(err.message),
+              actions: [
+                TextButton(
+                  child: Text("Ok"),
+                  onPressed: () {
+                    Navigator.of(context).pop();
+                  },
+                )
+              ],
+            );
+          });
+    });
+  }
+
+  void saveToFireStore() async {
+    User? user = _auth.currentUser;
+    UserModel userModel = UserModel();
+
+    userModel.email = user!.email;
+    userModel.uid = user.uid;
+    userModel.fullname = nama.text;
+    userModel.photo = "";
+
+    await frs.collection("users").doc(user.uid).set(userModel.toMap());
+    Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(
+            builder: (context) => HalamanUtama(
+                  uid: user.uid,
+                )));
+
+    Fluttertoast.showToast(msg: "Account Created Successfully");
   }
 }

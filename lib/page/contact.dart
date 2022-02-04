@@ -8,39 +8,6 @@ class ContactPage extends StatefulWidget {
 }
 
 class _ContactPageState extends State<ContactPage> {
-  void _handlePressed(types.User otherUser, BuildContext context) async {
-    final room = await firebaseChatCore.createRoom(otherUser);
-    pushNewScreen(
-      context,
-      screen: ChatPage(
-        room: room,
-      ),
-      withNavBar: false,
-      pageTransitionAnimation: PageTransitionAnimation.fade,
-    );
-  }
-
-  Widget _buildAvatar(types.User user) {
-    final color = getUserAvatarNameColor(user);
-    final hasImage = user.imageUrl != null;
-    final name = getUserName(user);
-
-    return Container(
-      margin: const EdgeInsets.only(right: 16),
-      child: CircleAvatar(
-        backgroundColor: hasImage ? Colors.transparent : color,
-        backgroundImage: hasImage ? NetworkImage(user.imageUrl!) : null,
-        radius: 20,
-        child: !hasImage
-            ? Text(
-                name.isEmpty ? '' : name[0].toUpperCase(),
-                style: const TextStyle(color: Colors.white),
-              )
-            : null,
-      ),
-    );
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -101,8 +68,14 @@ class _ContactPageState extends State<ContactPage> {
                   final user = snapshot.data![index];
 
                   return GestureDetector(
-                    onTap: () {
-                      _handlePressed(user, context);
+                    onTap: () async {
+                      final room = await firebaseChatCore.createRoom(user);
+                      _handlePressed(
+                          user.imageUrl.toString(),
+                          user.firstName.toString(),
+                          user.lastName.toString(),
+                          context,
+                          room);
                     },
                     child: Container(
                       decoration: BoxDecoration(
@@ -136,6 +109,5 @@ class _ContactPageState extends State<ContactPage> {
         ),
       ],
     ));
-    ;
   }
 }

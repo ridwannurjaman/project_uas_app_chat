@@ -32,3 +32,39 @@ final _auth = FirebaseAuth.instance;
 final FirebaseFirestore frs = FirebaseFirestore.instance;
 final FirebaseChatCore firebaseChatCore = FirebaseChatCore.instance;
 final FirebaseStorage firebaseStorage = FirebaseStorage.instance;
+
+void _handlePressed(String imageUrl, String name, String lastname,
+    BuildContext context, types.Room room) async {
+  // final room = await firebaseChatCore.createRoom(otherUser);
+  pushNewScreen(
+    context,
+    screen: ChatPage(
+        room: room,
+        image: imageUrl.toString(),
+        name: name.toString(),
+        lastname: lastname.toString()),
+    withNavBar: false,
+    pageTransitionAnimation: PageTransitionAnimation.fade,
+  );
+}
+
+Widget _buildAvatar(types.User user) {
+  final color = getUserAvatarNameColor(user);
+  final hasImage = user.imageUrl != null;
+  final name = getUserName(user);
+
+  return Container(
+    margin: const EdgeInsets.only(right: 16),
+    child: CircleAvatar(
+      backgroundColor: hasImage ? Colors.transparent : color,
+      backgroundImage: hasImage ? NetworkImage(user.imageUrl!) : null,
+      radius: 20,
+      child: !hasImage
+          ? Text(
+              name.isEmpty ? '' : name[0].toUpperCase(),
+              style: const TextStyle(color: Colors.white),
+            )
+          : null,
+    ),
+  );
+}

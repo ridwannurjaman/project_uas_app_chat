@@ -4,8 +4,14 @@ class ChatPage extends StatefulWidget {
   ChatPage({
     Key? key,
     required this.room,
+    required this.name,
+    required this.lastname,
+    required this.image,
   }) : super(key: key);
   final types.Room room;
+  final String name;
+  final String lastname;
+  final String image;
   @override
   State<ChatPage> createState() => _ChatPageState();
 }
@@ -17,9 +23,26 @@ class _ChatPageState extends State<ChatPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        systemOverlayStyle: SystemUiOverlayStyle.light,
-        title: const Text('Chat'),
-      ),
+          systemOverlayStyle: SystemUiOverlayStyle.light,
+          title: Row(
+            mainAxisAlignment: MainAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              SizedBox(
+                height: 30, // Your Height
+                width: 30, // Your width
+                child: ClipOval(
+                  child: Image(
+                      image: Image.network(widget.image).image,
+                      fit: BoxFit.fill),
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.only(left: 8.0),
+                child: Text(widget.name + " " + widget.lastname),
+              ),
+            ],
+          )),
       body: StreamBuilder<types.Room>(
         initialData: widget.room,
         stream: firebaseChatCore.room(widget.room.id),

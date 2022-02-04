@@ -159,7 +159,9 @@ class _RegisterPageState extends State<RegisterPage> {
                               ),
                             ),
                           ),
-                          onPressed: () {},
+                          onPressed: () {
+                            signUp();
+                          },
                           label: Text('SIGN UP'),
                           icon: isLoading
                               ? SizedBox(

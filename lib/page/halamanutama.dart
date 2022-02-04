@@ -11,7 +11,11 @@ class _HalamanUtamaState extends State<HalamanUtama> {
   PersistentTabController controller = PersistentTabController(initialIndex: 0);
 
   List<Widget> _buildScreens() {
-    return [];
+    return [
+      ContactPage(),
+      RoomChat(),
+      ContactPage(),
+    ];
   }
 
   List<PersistentBottomNavBarItem> _navBarsItems() {

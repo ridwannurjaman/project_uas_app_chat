@@ -12,6 +12,7 @@ class _RegisterPageState extends State<RegisterPage> {
   TextEditingController nama = new TextEditingController();
   TextEditingController password = new TextEditingController();
   TextEditingController repassword = new TextEditingController();
+  TextEditingController lastname = new TextEditingController();
   bool isLoading = false;
   bool passwordVisible = true;
   bool passwordVisibleType = true;
@@ -78,7 +79,23 @@ class _RegisterPageState extends State<RegisterPage> {
                               borderRadius: BorderRadius.circular(10.0),
                             ),
                             hintText: "Enter Your Name",
-                            labelText: "Fullname",
+                            labelText: "First Name",
+                            prefixIcon: Icon(Icons.person),
+                          ),
+                        ),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: TextFormField(
+                          validator: (value) =>
+                              value != null ? null : "Please Enter Your Name",
+                          controller: lastname,
+                          decoration: InputDecoration(
+                            border: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(10.0),
+                            ),
+                            hintText: "Enter Your Name",
+                            labelText: "Lastname",
                             prefixIcon: Icon(Icons.person),
                           ),
                         ),
@@ -213,14 +230,14 @@ class _RegisterPageState extends State<RegisterPage> {
 
   void saveToFireStore() async {
     User? user = _auth.currentUser;
-    UserModel userModel = UserModel();
-
-    userModel.email = user!.email;
-    userModel.uid = user.uid;
-    userModel.fullname = nama.text;
-    userModel.photo = "";
-
-    await frs.collection("users").doc(user.uid).set(userModel.toMap());
+    await firebaseChatCore.createUserInFirestore(
+      types.User(
+        firstName: nama.text,
+        id: user!.uid,
+        imageUrl: 'https://diskop.pekanbaru.go.id/assets/vendor/logo/avat.png',
+        lastName: lastname.text,
+      ),
+    );
     Navigator.pushReplacement(
         context,
         MaterialPageRoute(

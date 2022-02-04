@@ -116,7 +116,9 @@ class _LoginPageState extends State<LoginPage> {
                               ),
                             ),
                           ),
-                          onPressed: () {},
+                          onPressed: () {
+                            sigin(emails.text, password.text);
+                          },
                           label: Text('LOGIN'),
                           icon: isLoading
                               ? SizedBox(

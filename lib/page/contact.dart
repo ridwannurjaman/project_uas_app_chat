@@ -10,14 +10,13 @@ class ContactPage extends StatefulWidget {
 class _ContactPageState extends State<ContactPage> {
   void _handlePressed(types.User otherUser, BuildContext context) async {
     final room = await firebaseChatCore.createRoom(otherUser);
-
-    Navigator.of(context).pop();
-    await Navigator.of(context).push(
-      MaterialPageRoute(
-        builder: (context) => ChatPage(
-          room: room,
-        ),
+    pushNewScreen(
+      context,
+      screen: ChatPage(
+        room: room,
       ),
+      withNavBar: false,
+      pageTransitionAnimation: PageTransitionAnimation.fade,
     );
   }
 

@@ -25,14 +25,21 @@ dependencies:
   cloud_firestore: ^3.1.6
   cupertino_icons: ^1.0.2
   email_validator: ^2.0.1
+  file_picker: ^4.3.2
   firebase_auth: ^3.3.4
   firebase_core: ^1.9.0
+  firebase_storage: ^10.2.5
   flutter:
     sdk: flutter
+  flutter_chat_ui: ^1.5.5
   flutter_firebase_chat_core: ^1.5.2
   flutter_native_splash: ^1.2.0
   fluttertoast: ^8.0.8
   http: ^0.13.3
+  image_picker: ^0.8.4+4
+  mime: ^1.0.1
+  open_file: ^3.2.1
+  path_provider: ^2.0.8
   persistent_bottom_nav_bar: ^4.0.2
 
 dev_dependencies:

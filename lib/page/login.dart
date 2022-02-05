@@ -63,7 +63,7 @@ class _LoginPageState extends State<LoginPage> {
                               borderRadius: BorderRadius.circular(10.0),
                             ),
                             hintText: "Enter your email",
-                            labelText: "Email / Username",
+                            labelText: "Email",
                             prefixIcon: Icon(Icons.person),
                           ),
                         ),
@@ -158,6 +158,18 @@ class _LoginPageState extends State<LoginPage> {
                           ),
                         ),
                       ),
+                      Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: InkWell(
+                          child: Text("Reset Password"),
+                          onTap: () {
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => ResetPasswordPage()));
+                          },
+                        ),
+                      )
                     ],
                   ),
                 ),
@@ -176,16 +188,20 @@ class _LoginPageState extends State<LoginPage> {
 
   void sigin(String email, String password) async {
     if (_formKey.currentState!.validate()) {
-      await _auth
-          .signInWithEmailAndPassword(email: email, password: password)
-          .then((res) {
-        Navigator.pushReplacement(
-            context,
-            MaterialPageRoute(
-                builder: (context) => HalamanUtama(
-                      uid: res.user!.uid,
-                    )));
-      });
+      try {
+        await _auth
+            .signInWithEmailAndPassword(email: email, password: password)
+            .then((res) {
+          Navigator.pushReplacement(
+              context,
+              MaterialPageRoute(
+                  builder: (context) => HalamanUtama(
+                        uid: res.user!.uid,
+                      )));
+        });
+      } catch (e) {
+        Fluttertoast.showToast(msg: "Please check your email and passowrd");
+      }
     }
   }
 }

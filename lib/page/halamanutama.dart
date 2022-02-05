@@ -1,14 +1,14 @@
 part of 'pages.dart';
 
 class HalamanUtama extends StatefulWidget {
-  HalamanUtama({Key? key, required String uid}) : super(key: key);
+  HalamanUtama({Key? key, String? uid}) : super(key: key);
 
   @override
   _HalamanUtamaState createState() => _HalamanUtamaState();
 }
 
 class _HalamanUtamaState extends State<HalamanUtama> {
-  PersistentTabController controller = PersistentTabController(initialIndex: 0);
+  PersistentTabController controller = PersistentTabController(initialIndex: 1);
 
   List<Widget> _buildScreens() {
     return [
@@ -60,8 +60,8 @@ class _HalamanUtamaState extends State<HalamanUtama> {
             borderRadius: BorderRadius.circular(10.0),
             colorBehindNavBar: Colors.white,
           ),
-          popAllScreensOnTapOfSelectedTab: true,
-          popActionScreens: PopActionScreensType.all,
+          // popAllScreensOnTapOfSelectedTab: true,
+          // popActionScreens: PopActionScreensType.all,
           itemAnimationProperties: ItemAnimationProperties(
             duration: Duration(milliseconds: 200),
             curve: Curves.ease,

@@ -239,11 +239,14 @@ class _ProfilePageState extends State<ProfilePage> {
                     ),
                   ),
                   onPressed: () async {
-                    _auth.signOut();
+                    // Navigator.pop(context);
+                    pushNewScreen(context,
+                        screen: LoginPage(), withNavBar: false);
                     Navigator.pushAndRemoveUntil(
                         context,
                         MaterialPageRoute(builder: (context) => LoginPage()),
                         (route) => false);
+                    _auth.signOut();
                   },
                   label: Text('Log out'),
                   icon: Icon(Icons.logout),

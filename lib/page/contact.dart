@@ -8,6 +8,9 @@ class ContactPage extends StatefulWidget {
 }
 
 class _ContactPageState extends State<ContactPage> {
+  List<types.User> dataContact = [];
+  List<types.User> dataSearch = [];
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -26,8 +29,14 @@ class _ContactPageState extends State<ContactPage> {
             Padding(
               padding: const EdgeInsets.fromLTRB(8.0, 70, 8, 0),
               child: TextField(
-                onChanged: (value) {
-                  setState(() {});
+                onChanged: (text) {
+                  text = text.toLowerCase();
+                  setState(() {
+                    dataContact = dataSearch.where((val) {
+                      var cariNama = val.firstName.toString().toLowerCase();
+                      return cariNama.contains(text);
+                    }).toList();
+                  });
                 },
                 decoration: const InputDecoration(
                     border: OutlineInputBorder(
@@ -47,7 +56,7 @@ class _ContactPageState extends State<ContactPage> {
         ),
         StreamBuilder<List<types.User>>(
           stream: firebaseChatCore.users(),
-          initialData: const [],
+          initialData: dataContact,
           builder: (context, snapshot) {
             if (!snapshot.hasData || snapshot.data!.isEmpty) {
               return Container(
@@ -57,15 +66,17 @@ class _ContactPageState extends State<ContactPage> {
                 ),
                 child: const Text('No users'),
               );
+            } else {
+              dataContact = snapshot.data!;
             }
 
             return Expanded(
               child: ListView.builder(
                 // shrinkWrap: true,
                 padding: EdgeInsets.zero,
-                itemCount: snapshot.data!.length,
+                itemCount: dataContact.length,
                 itemBuilder: (context, index) {
-                  final user = snapshot.data![index];
+                  final user = dataContact[index];
 
                   return GestureDetector(
                     onTap: () async {

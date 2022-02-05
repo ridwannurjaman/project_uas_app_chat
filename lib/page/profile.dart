@@ -240,8 +240,10 @@ class _ProfilePageState extends State<ProfilePage> {
                   ),
                   onPressed: () async {
                     _auth.signOut();
-                    Navigator.pushReplacement(context,
-                        MaterialPageRoute(builder: (context) => LoginPage()));
+                    Navigator.pushAndRemoveUntil(
+                        context,
+                        MaterialPageRoute(builder: (context) => LoginPage()),
+                        (route) => false);
                   },
                   label: Text('Log out'),
                   icon: Icon(Icons.logout),

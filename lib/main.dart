@@ -15,7 +15,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     User? result = FirebaseAuth.instance.currentUser;
     return MaterialApp(
-      title: 'Flutter Demo',
+      title: 'MaChat',
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),

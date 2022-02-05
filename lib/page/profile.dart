@@ -33,16 +33,19 @@ class _ProfilePageState extends State<ProfilePage> {
           final reference = firebaseStorage.ref(name);
           await reference.putFile(file);
           final uri = await reference.getDownloadURL();
-
+          Fluttertoast.showToast(msg: "Please Wait!");
           frs.collection("users").doc(user!.uid).update({
             "imageUrl": uri,
           }).then((_) {
-            fileUrl = uri;
+            setState(() {
+              fileUrl = uri;
+            });
+
             print("success!");
-            Fluttertoast.showToast(msg: "Success!");
-            isLoading = false;
           });
-        } finally {}
+        } finally {
+          Fluttertoast.showToast(msg: "Success!");
+        }
       }
     } on PlatformException catch (e) {
       print("error $e");

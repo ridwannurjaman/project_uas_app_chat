@@ -14,7 +14,7 @@ class _HalamanUtamaState extends State<HalamanUtama> {
     return [
       ContactPage(),
       RoomChat(),
-      ContactPage(),
+      ProfilePage(),
     ];
   }
 

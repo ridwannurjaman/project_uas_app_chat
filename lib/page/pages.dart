@@ -27,6 +27,7 @@ part 'halamanutama.dart';
 part 'contact.dart';
 part 'roomChat.dart';
 part 'chat.dart';
+part 'profile.dart';
 
 final _auth = FirebaseAuth.instance;
 final FirebaseFirestore frs = FirebaseFirestore.instance;
